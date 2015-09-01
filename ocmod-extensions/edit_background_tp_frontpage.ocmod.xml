@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Custom background-color FRONT PAGE</name>
+    <code>Custom background-color FRONT PAGE</code>
+    <version>1.0</version>
+    <author>websitemart.vn</author>
+    <link>http://www.octheme.com</link>
+    <file path="catalog/controller/common/header.php">
+		<operation error="skip">
+			<search><![CDATA[
+            $this->load->language('common/header');
+            ]]></search>
+			<add position="before"><![CDATA[
+              if (is_file(DIR_IMAGE . $this->config->get('config_backgroundimage'))) {
+			$data['backgroundimage'] = $server . 'image/' . $this->config->get('config_backgroundimage');
+		} else {
+			$data['backgroundimage'] = '';
+		}
+
+        $data['repeatbackground'] = $this->config->get('config_repeatbackground');
+        $data['backgroundcolor'] = $this->config->get('config_backgroundcolor');
+
+        $data['text_color'] = $this->config->get('config_text_color');
+        $data['link_color'] = $this->config->get('config_link_color');
+        $data['link_color_hover'] = $this->config->get('config_link_color_hover');
+        $data['title_color'] = $this->config->get('config_title_color');
+
+        $data['top_bar_background'] = $this->config->get('config_top_bar_background');
+        $data['top_bar_link_color'] = $this->config->get('config_top_bar_link_color');
+        $data['top_bar_link_color_hover'] = $this->config->get('config_top_bar_link_color_hover');
+        $data['top_bar_link_icon'] = $this->config->get('config_top_bar_link_icon');
+
+        $data['searchbackground'] = $this->config->get('config_searchbackground');
+        $data['searchcolor'] = $this->config->get('config_searchcolor');
+
+        $data['button_searchbackground'] = $this->config->get('config_button_searchbackground');
+        $data['button_searchcolor'] = $this->config->get('config_button_searchcolor');
+
+        $data['cartbackground'] = $this->config->get('config_cartbackground');
+        $data['cartbackgroundopen'] = $this->config->get('config_cartbackgroundopen');
+
+        $data['cartlink'] = $this->config->get('config_cartlink');
+        $data['cartlinkopen'] = $this->config->get('config_cartlinkopen');
+
+        $data['menubackground'] = $this->config->get('config_menubackground');
+        $data['menulink'] = $this->config->get('config_menulink');
+
+        $data['menulinkhover'] = $this->config->get('config_menulinkhover');
+        $data['menulinkhoverbg'] = $this->config->get('config_menulinkhoverbg');
+
+        $data['menubackgrounddropdown'] = $this->config->get('config_menubackgrounddropdown');
+        $data['menulinkdropdown'] = $this->config->get('config_menulinkdropdown');
+
+        $data['menulinkdropdownhover'] = $this->config->get('config_menulinkdropdownhover');
+        $data['menulinkdropdownhoverbg'] = $this->config->get('config_menulinkdropdownhoverbg');
+
+        $data['footerbg'] = $this->config->get('config_footerbg');
+        $data['footerlink'] = $this->config->get('config_footerlink');
+        $data['footerlinkhover'] = $this->config->get('config_footerlinkhover');
+        $data['footertitle'] = $this->config->get('config_footertitle');
+
+        $data['productsbg'] = $this->config->get('config_productsbg');
+        $data['productsbghover'] = $this->config->get('config_productsbghover');
+        $data['productstitlehover'] = $this->config->get('config_productstitlehover');
+        $data['productstitle'] = $this->config->get('config_productstitle');
+
+        $data['buttoncartbg'] = $this->config->get('config_buttoncartbg');
+        $data['buttoncartbghover'] = $this->config->get('config_buttoncartbghover');
+        $data['buttoncarttext'] = $this->config->get('config_buttoncarttext');
+        $data['buttoncarttexthover'] = $this->config->get('config_buttoncarttexthover');
+        $data['buttoncartlikebg'] = $this->config->get('config_buttoncartlikebg');
+        $data['buttoncartlikebghover'] = $this->config->get('config_buttoncartlikebghover');
+        $data['buttoncartlike'] = $this->config->get('config_buttoncartlike');
+        $data['buttoncartlikehover'] = $this->config->get('config_buttoncartlikehover');
+        $data['buttondefault'] = $this->config->get('config_buttondefault');
+        $data['buttondefaulthover'] = $this->config->get('config_buttondefaulthover');
+        $data['popup_image'] = $this->config->get('config_popup_image');
+            ]]></add>
+		</operation>
+	</file>
+	<file path="catalog/view/theme/*/template/common/header.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <?php echo $google_analytics; ?>
+            ]]></search>
+			<add position="before"><![CDATA[
+            <style type="text/css">
+           body{
+           <?php if ($backgroundimage) { ?>
+           background-image: url(<?php echo $backgroundimage; ?>) ;
+           background-repeat:<?php echo $repeatbackground; ?>;
+          <?php } else { ?>
+          <?php } ?>
+           background-color: <?php echo $backgroundcolor; ?> ;
+           color: <?php echo $text_color; ?>;
+          }
+          h1, h2, h3, h4, h5, h6 {
+	      color: <?php echo $title_color; ?>;
+          }
+          a {
+          color: <?php echo $link_color; ?>;
+          }
+          a:hover {
+	      color: <?php echo $link_color_hover; ?>;
+          }
+          #top {
+	     background-color: <?php echo $top_bar_background; ?>;
+         }
+         header{
+         background-color: <?php echo $top_bar_background; ?>;
+         }
+          #top .btn-link, #top-links li, #top-links a {
+	     color: <?php echo $top_bar_link_color; ?>;
+         }
+         #top .btn-link:hover, #top-links a:hover {
+        	color: <?php echo $top_bar_link_color_hover; ?>;
+         }
+         #top .fa {
+        	color: <?php echo $top_bar_link_icon; ?>;
+         }
+
+        #search .input-lg {
+         background:<?php echo $searchbackground; ?>;
+         color:<?php echo $searchcolor; ?>;
+        }
+         #search .btn-lg {
+         color:<?php echo $button_searchcolor; ?>;
+         background: <?php echo $button_searchbackground; ?>;
+        }
+        #cart > .btn {
+    	color: <?php echo $cartlink; ?>;
+        background:<?php echo $cartbackground; ?>;
+          }
+      #cart.open > .btn {
+	   background-color: <?php echo $cartbackgroundopen; ?>;
+     	color: <?php echo $cartlinkopen; ?>;
+       }
+       #cart > .btn:hover {
+       background: <?php echo $cartbackgroundopen; ?>;
+     	color: <?php echo $cartlinkopen; ?>;
+      }
+      #menu {
+      background: <?php echo $menubackground; ?>;
+      }
+     #menu .nav > li > a {
+	color: <?php echo $menulink; ?>;
+     }
+     #menu .nav > li > a:hover, #menu .nav > li.open > a {
+	background: <?php echo $menulinkhoverbg; ?>;
+    color: <?php echo $menulinkhover; ?>;
+    }
+    #menu .dropdown-menu {
+	 background: <?php echo $menubackgrounddropdown; ?>;
+}
+#menu .dropdown-inner a {
+	color: <?php echo $menulinkdropdown; ?>;
+}
+#menu .dropdown-inner li a:hover {
+	color: <?php echo $menulinkdropdownhover; ?>;
+    background: <?php echo $menulinkdropdownhoverbg; ?>;
+}
+#menu .see-all:hover, #menu .see-all:focus {
+	color: <?php echo $menulinkdropdownhover; ?>;
+    background: <?php echo $menulinkdropdownhoverbg; ?>;
+}
+#menu .btn-navbar:hover, #menu .btn-navbar:focus, #menu .btn-navbar:active, #menu .btn-navbar.disabled, #menu .btn-navbar[disabled] {
+	color: <?php echo $menulinkdropdownhover; ?>;
+    background: <?php echo $menulinkdropdownhoverbg; ?>;
+}
+footer {
+    background: <?php echo $footerbg; ?>;
+}
+footer a {
+	color: <?php echo $footerlink; ?>;
+}
+footer a:hover {
+	color: <?php echo $footerlinkhover; ?>;
+}
+footer h5 {
+	color: <?php echo $footertitle; ?>;
+}
+.product-thumb {
+	background: <?php echo $productsbg; ?>;
+}
+.product-thumb:hover {
+	background: <?php echo $productsbghover; ?>;
+}
+.product-thumb  h4 a{
+	color: <?php echo $productstitle; ?>;
+}
+.product-thumb h4 a:hover {
+	color: <?php echo $productstitlehover; ?>;
+}
+.product-thumb .button-group, .product-thumb .button-group button {
+	background: <?php echo $buttoncartbg; ?>;
+    color: <?php echo $buttoncarttext; ?>;
+}
+.product-thumb .button-group button:hover {
+	background: <?php echo $buttoncartbghover; ?>;
+    color: <?php echo $buttoncarttexthover; ?>;
+}
+
+.product-thumb .button-group button + button {
+    color: <?php echo $buttoncartlike; ?>;
+}
+.product-thumb .button-group button + button:hover {
+    color: <?php echo $buttoncartlikehover; ?>;
+}
+.product-thumb .btn-group .btn-default:hover {
+    color: <?php echo $buttoncartlikehover; ?>;
+}
+.product-thumb .btn-group .btn-default {
+    color: <?php echo $buttoncartlike; ?>;
+}
+.btn-primary {
+   background: <?php echo $buttondefault; ?>;
+}
+.btn-primary:hover {
+   background: <?php echo $buttondefaulthover; ?>;
+}
+.mfp-figure:after {
+    background:<?php echo $popup_image; ?>;
+    }
+            </style>
+            ]]></add>
+		</operation>
+	</file>
+
+</modification>

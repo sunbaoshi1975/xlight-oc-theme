@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Followme</name>
+    <code>Followme</code>
+    <version>1.0</version>
+    <author>websitemart.vn</author>
+    <link>http://www.octheme.com</link>
+	<file path="admin/controller/setting/setting.php">
+		<operation>
+			<search><![CDATA[
+            $data['entry_google_analytics'] = $this->language->get('entry_google_analytics');
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['entry_followme_facebook'] = $this->language->get('entry_followme_facebook');
+            $data['help_followme_facebook'] = $this->language->get('help_followme_facebook');
+            $data['text_followme'] = $this->language->get('text_followme');
+
+            $data['entry_followme_twitter'] = $this->language->get('entry_followme_twitter');
+            $data['help_followme_twitter'] = $this->language->get('help_followme_twitter');
+
+            $data['entry_followme_google'] = $this->language->get('entry_followme_google');
+            $data['help_followme_google'] = $this->language->get('help_followme_google');
+
+            $data['entry_followme_linkedin'] = $this->language->get('entry_followme_linkedin');
+            $data['help_followme_linkedin'] = $this->language->get('help_followme_linkedin');
+
+            $data['entry_followme_pinterest'] = $this->language->get('entry_followme_pinterest');
+            $data['help_followme_pinterest'] = $this->language->get('help_followme_pinterest');
+            ]]></add>
+		</operation>
+        <operation>
+			<search><![CDATA[
+            $data['header'] = $this->load->controller('common/header');
+            ]]></search>
+			<add position="before"><![CDATA[
+            if (isset($this->request->post['config_followme_facebook'])) {
+			$data['config_followme_facebook'] = $this->request->post['config_followme_facebook'];
+		} else {
+			$data['config_followme_facebook'] = $this->config->get('config_followme_facebook');
+		}
+
+        if (isset($this->request->post['config_followme_twitter'])) {
+			$data['config_followme_twitter'] = $this->request->post['config_followme_twitter'];
+		} else {
+			$data['config_followme_twitter'] = $this->config->get('config_followme_twitter');
+		}
+
+        if (isset($this->request->post['config_followme_google'])) {
+			$data['config_followme_google'] = $this->request->post['config_followme_google'];
+		} else {
+			$data['config_followme_google'] = $this->config->get('config_followme_google');
+		}
+
+        if (isset($this->request->post['config_followme_linkedin'])) {
+			$data['config_followme_linkedin'] = $this->request->post['config_followme_linkedin'];
+		} else {
+			$data['config_followme_linkedin'] = $this->config->get('config_followme_linkedin');
+		}
+
+        if (isset($this->request->post['config_followme_pinterest'])) {
+			$data['config_followme_pinterest'] = $this->request->post['config_followme_pinterest'];
+		} else {
+			$data['config_followme_pinterest'] = $this->config->get('config_followme_pinterest');
+		}
+            ]]></add>
+		</operation>
+	</file>
+    <file path="admin/language/*/setting/setting.php">
+		<operation>
+			<search><![CDATA[
+            <?php
+            ]]></search>
+			<add position="after"><![CDATA[
+            $_['text_followme']           = 'Follow me';
+
+            $_['entry_followme_facebook']           = 'Follow ID';
+            $_['help_followme_facebook']            = 'Enter Facebook ID name or Facebook Page ID.(i.e facebook.com/example).';
+
+            $_['entry_followme_twitter']           = 'Twitter usename';
+            $_['help_followme_twitter']            = 'Enter Twitter @username(without the @).).';
+
+            $_['entry_followme_pinterest']           = 'Pinterest usename';
+            $_['help_followme_pinterest']            = 'Enter Pinterest company or username.(i.e linkedin.com/example).';
+
+            $_['entry_followme_google']           = 'Google+ usename';
+            $_['help_followme_google']            = 'Enter Google+ Page code.(i.e plus.google.com/0123456...).';
+
+            $_['entry_followme_linkedin']           = 'linkedin usename';
+            $_['help_followme_linkedin']            = 'Enter linkedin  username.(i.e linkedin.com/example).';
+            ]]></add>
+		</operation>
+	</file>
+        <file path="admin/view/template/setting/setting.tpl">
+		<operation>
+			<search><![CDATA[
+            <legend><?php echo $text_product; ?></legend>
+            ]]></search>
+			<add position="before"><![CDATA[
+            <legend><?php echo $text_followme; ?></legend>
+            <div class="form-group">
+                           <label class="col-sm-2 control-label" for="input-followme_facebook"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_followme_facebook); ?>"><?php echo $entry_followme_facebook; ?></span></label>
+                <div class="col-sm-10">
+                  <textarea  name="config_followme_facebook" rows="1" placeholder="<?php echo $entry_followme_facebook; ?>" id="input-followme_facebook" class="form-control"><?php echo $config_followme_facebook; ?></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                           <label class="col-sm-2 control-label" for="input-followme_twitter"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_followme_twitter); ?>"><?php echo $entry_followme_twitter; ?></span></label>
+                <div class="col-sm-10">
+                 <textarea name="config_followme_twitter" rows="1" placeholder="<?php echo $entry_followme_twitter; ?>" id="input-followme_twitter" class="form-control"><?php echo $config_followme_twitter; ?></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                           <label class="col-sm-2 control-label" for="input-followme_google"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_followme_google); ?>"><?php echo $entry_followme_google; ?></span></label>
+                <div class="col-sm-10">
+                 <textarea name="config_followme_google" rows="1" placeholder="<?php echo $entry_followme_google; ?>" id="input-followme_google" class="form-control"><?php echo $config_followme_google; ?></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                           <label class="col-sm-2 control-label" for="input-followme_pinterest"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_followme_pinterest); ?>"><?php echo $entry_followme_pinterest; ?></span></label>
+                <div class="col-sm-10">
+                 <textarea name="config_followme_pinterest" rows="1" placeholder="<?php echo $entry_followme_pinterest; ?>" id="input-followme_pinterest" class="form-control"><?php echo $config_followme_pinterest; ?></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                           <label class="col-sm-2 control-label" for="input-followme_linkedin"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_followme_linkedin); ?>"><?php echo $entry_followme_linkedin; ?></span></label>
+                <div class="col-sm-10">
+                 <textarea name="config_followme_linkedin" rows="1" placeholder="<?php echo $entry_followme_linkedin; ?>" id="input-followme_linkedin" class="form-control"><?php echo $config_followme_linkedin; ?></textarea>
+                </div>
+            </div>
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/controller/common/footer.php">
+		<operation>
+			<search><![CDATA[
+            $this->load->language('common/footer');
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['followme_facebook'] = html_entity_decode($this->config->get('config_followme_facebook'), ENT_QUOTES, 'UTF-8');
+            $data['text_follow_us'] = $this->language->get('text_follow_us');
+
+            $data['text_facebook'] = $this->language->get('text_facebook');
+            $data['text_followmeon'] = $this->language->get('text_followmeon');
+            $data['name'] = $this->config->get('config_name');
+
+            $data['text_pinterest'] = $this->language->get('text_pinterest');
+            $data['followme_pinterest'] = html_entity_decode($this->config->get('config_followme_pinterest'), ENT_QUOTES, 'UTF-8');
+
+            $data['text_twitter'] = $this->language->get('text_twitter');
+            $data['followme_twitter'] = html_entity_decode($this->config->get('config_followme_twitter'), ENT_QUOTES, 'UTF-8');
+
+            $data['text_google'] = $this->language->get('text_google');
+            $data['followme_google'] = html_entity_decode($this->config->get('config_followme_google'), ENT_QUOTES, 'UTF-8');
+
+            $data['text_linkedin'] = $this->language->get('text_linkedin');
+            $data['followme_linkedin'] = html_entity_decode($this->config->get('config_followme_linkedin'), ENT_QUOTES, 'UTF-8');
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/language/*/common/footer.php">
+		<operation>
+			<search><![CDATA[
+            <?php
+            ]]></search>
+			<add position="after"><![CDATA[
+            $_['text_follow_us']           = 'Follow';
+            $_['text_facebook']           = 'Facebook';
+            $_['text_followmeon']           = 'on';
+            $_['text_twitter']           = 'Twitter';
+            $_['text_pinterest']           = 'Pinterest';
+            $_['text_google']           = 'Google+';
+            $_['text_linkedin']           = 'linkedin';
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/view/theme/*/template/common/footer.tpl">
+		<operation>
+			<search><![CDATA[
+            <p><?php echo $powered; ?></p>
+            ]]></search>
+			<add position="before"><![CDATA[
+            <div class="nav pull-right">
+            <ul class="list-inline">
+          <?php if ($followme_facebook) { ?><li><a href="http://facebook.com/<?php echo $followme_facebook; ?>"  target="_blank" title="<?php echo $text_follow_us; ?>&nbsp;<?php echo $name; ?>&nbsp;<?php echo $text_followmeon; ?>&nbsp;<?php echo $text_facebook; ?>"><i class="fa fa-facebook"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_facebook; ?></span></a></li><?php } ?>
+          <?php if ($followme_twitter) { ?><li><a href="http://twitter.com/<?php echo $followme_twitter; ?>"  target="_blank" title="<?php echo $text_follow_us; ?>&nbsp;<?php echo $name; ?>&nbsp;<?php echo $text_followmeon; ?>&nbsp;<?php echo $text_twitter; ?>"><i class="fa fa-twitter"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_twitter; ?></span></a></li><?php } ?>
+          <?php if ($followme_pinterest) { ?><li><a href="http://pinterest.com/<?php echo $followme_pinterest; ?>"  target="_blank" title="<?php echo $text_follow_us; ?>&nbsp;<?php echo $name; ?>&nbsp;<?php echo $text_followmeon; ?>&nbsp;<?php echo $text_pinterest; ?>"><i class="fa fa-pinterest"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_pinterest; ?></span></a></li><?php } ?>
+          <?php if ($followme_google) { ?><li><a href="http://plus.google.com/<?php echo $followme_google; ?>"  target="_blank" title="<?php echo $text_follow_us; ?>&nbsp;<?php echo $name; ?>&nbsp;<?php echo $text_followmeon; ?>&nbsp;<?php echo $text_google; ?>"><i class="fa fa-google"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_google; ?></span></a></li><?php } ?>
+          <?php if ($followme_linkedin) { ?><li><a href="http://linkedin.com/<?php echo $followme_linkedin; ?>"  target="_blank" title="<?php echo $text_follow_us; ?>&nbsp;<?php echo $name; ?>&nbsp;<?php echo $text_followmeon; ?>&nbsp;<?php echo $text_linkedin; ?>"><i class="fa fa-linkedin"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_linkedin; ?></span></a></li><?php } ?>
+          </ul>
+          </div>
+            ]]></add>
+		</operation>
+	</file>
+</modification>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>OC THEME</name>
+    <code>oc theme</code>
+    <version>1.0</version>
+    <author>websitemart.vn</author>
+    <link>http://www.octheme.com</link>
+	<file path="catalog/view/theme/*/template/module/featured.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <h3><?php echo $heading_title; ?></h3>
+            ]]></search>
+			<add position="replace"><![CDATA[
+            <div id="featured"><h3><?php echo $heading_title; ?></h3> </div>
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/view/theme/*/template/module/special.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <h3><?php echo $heading_title; ?></h3>
+            ]]></search>
+			<add position="replace"><![CDATA[
+            <div id="special"><h3><?php echo $heading_title; ?></h3> </div>
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/view/theme/*/template/module/latest.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <h3><?php echo $heading_title; ?></h3>
+            ]]></search>
+			<add position="replace"><![CDATA[
+            <div id="latest"><h3><?php echo $heading_title; ?></h3> </div>
+            ]]></add>
+		</operation>
+	</file>
+     <file path="catalog/view/theme/*/template/module/bestseller.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <h3><?php echo $heading_title; ?></h3>
+            ]]></search>
+			<add position="replace"><![CDATA[
+            <div id="special"><h3><?php echo $heading_title; ?></h3> </div>
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/view/theme/*/template/module/featuredmanufacturer.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <h3><?php echo $heading_title; ?></h3>
+            ]]></search>
+			<add position="replace"><![CDATA[
+            <div id="special" style="margin-top: 15px;"><h3><?php echo $heading_title; ?></h3> </div>
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/view/theme/*/template/module/category.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <div class="list-group">
+            ]]></search>
+			<add position="before"><![CDATA[
+            <div id="category-box"><h3><?php echo $heading_title; ?></h3></div>
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/view/theme/*/template/module/information.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <div class="sidebar">
+            ]]></search>
+			<add position="before"><![CDATA[
+            <div id="information"><h3><?php echo $heading_title; ?></h3></div>
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/view/theme/*/template/module/account.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+             <div class="list-group">
+            ]]></search>
+			<add position="before"><![CDATA[
+            <div id="category-box"><h3><?php echo $heading_title; ?></h3></div>
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/view/theme/*/template/module/affiliate.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+             <div class="list-group">
+            ]]></search>
+			<add position="before"><![CDATA[
+            <div id="category-box"><h3><?php echo $heading_title; ?></h3></div>
+            ]]></add>
+		</operation>
+	</file>
+        <file path="catalog/controller/common/header.php">
+        <operation>
+            <search><![CDATA[foreach ($children as $child) {]]></search>
+            <add position="after"><![CDATA[
+					$children_lv3_data = array();
+
+					$children_lv3 = $this->model_catalog_category->getCategories($child['category_id']);
+
+					foreach ($children_lv3 as $child_lv3) {
+						$filter_data_lv3 = array(
+							'filter_category_id'  => $child_lv3['category_id'],
+							'filter_sub_category' => true
+						);
+
+						$children_lv3_data[] = array(
+							'name'  => $child_lv3['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data_lv3) . ')' : ''),
+							'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'] . '_' . $child_lv3['category_id'])
+						);
+					}
+            ]]></add>
+        </operation>
+		<operation>
+            <search><![CDATA['name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),]]></search>
+            <add position="after"><![CDATA[
+						'children_lv3' => $children_lv3_data,
+						'column'   => $child['column'] ? $child['column'] : 1,
+            ]]></add>
+        </operation>
+    </file>
+</modification>

@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Custom background-color Admin page</name>
+    <code>Custom background-color Admin page</code>
+    <version>1.0</version>
+    <author>websitemart.vn</author>
+    <link>http://www.octheme.com</link>
+    <file path="admin/controller/setting/setting.php">
+		<operation error="skip">
+			<search><![CDATA[
+            $data['heading_title'] = $this->language->get('heading_title');
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['text_background'] = $this->language->get('text_background');
+            $data['text_backgroundhover'] = $this->language->get('text_backgroundhover');
+            $data['text_links'] = $this->language->get('text_links');
+            $data['text_links_hover'] = $this->language->get('text_links_hover');
+            $data['text_icon'] = $this->language->get('text_icon');
+            $data['text_icon_hover'] = $this->language->get('text_icon_hover');
+            $data['text_search'] = $this->language->get('text_search');
+            $data['text_cart'] = $this->language->get('text_cart');
+            $data['text_buttonsearchbg'] = $this->language->get('text_buttonsearchbg');
+            $data['text_buttonsearchcolor'] = $this->language->get('text_buttonsearchcolor');
+            $data['text_menu'] = $this->language->get('text_menu');
+            $data['text_dropdown'] = $this->language->get('text_dropdown');
+            $data['text_footer'] = $this->language->get('text_footer');
+            $data['text_products'] = $this->language->get('text_products');
+            $data['text_buttoncartbg'] = $this->language->get('text_buttoncartbg');
+            $data['text_buttoncarttext'] = $this->language->get('text_buttoncarttext');
+            $data['text_buttoncartbghover'] = $this->language->get('text_buttoncartbghover');
+            $data['text_buttoncarttexthover'] = $this->language->get('text_buttoncarttexthover');
+            $data['text_buttoncartlikebg'] = $this->language->get('text_buttoncartlikebg');
+            $data['text_buttoncartlikebghover'] = $this->language->get('text_buttoncartlikebghover');
+            $data['text_buttoncartlike'] = $this->language->get('text_buttoncartlike');
+            $data['text_buttoncartlikehover'] = $this->language->get('text_buttoncartlikehover');
+            $data['text_buttondefault'] = $this->language->get('text_buttondefault');
+            $data['text_buttondefaulthover'] = $this->language->get('text_buttondefaulthover');
+            $data['text_popup_image'] = $this->language->get('text_popup_image');
+
+            $data['entry_backgroundimage'] = $this->language->get('entry_backgroundimage');
+            $data['help_backgroundimage'] = $this->language->get('help_backgroundimage');
+            $data['entry_repeatbackground'] = $this->language->get('entry_repeatbackground');
+            $data['entry_backgroundcolor'] = $this->language->get('entry_backgroundcolor');
+
+            $data['text_general'] = $this->language->get('text_general');
+            $data['help_general'] = $this->language->get('help_general');
+            $data['help_search'] = $this->language->get('help_search');
+            $data['help_cart'] = $this->language->get('help_cart');
+            $data['help_menu'] = $this->language->get('help_menu');
+            $data['help_footer'] = $this->language->get('help_footer');
+            $data['help_products'] = $this->language->get('help_products');
+
+            $data['tab_themepanel'] = $this->language->get('tab_themepanel');
+
+            $data['entry_text_color'] = $this->language->get('entry_text_color');
+            $data['entry_link_color'] = $this->language->get('entry_link_color');
+            $data['entry_link_color_hover'] = $this->language->get('entry_link_color_hover');
+            $data['entry_title_color'] = $this->language->get('entry_title_color');
+            $data['entry_title_colorhover'] = $this->language->get('entry_title_colorhover');
+
+            $data['text_top_bar'] = $this->language->get('text_top_bar');
+            $data['help_top_bar'] = $this->language->get('help_top_bar');
+            $data['entry_top_bar_background'] = $this->language->get('entry_top_bar_background');
+
+            ]]></add>
+		</operation>
+        <operation error="skip">
+			<search><![CDATA[
+            $this->load->model('localisation/return_status');
+            ]]></search>
+			<add position="after"><![CDATA[
+            if (isset($this->request->post['config_backgroundimage'])) {
+			$data['config_backgroundimage'] = $this->request->post['config_backgroundimage'];
+		} else {
+			$data['config_backgroundimage'] = $this->config->get('config_backgroundimage');
+		}
+
+		if (isset($this->request->post['config_backgroundimage']) && is_file(DIR_IMAGE . $this->request->post['config_backgroundimage'])) {
+			$data['backgroundimage'] = $this->model_tool_image->resize($this->request->post['config_logo'], 100, 100);
+		} elseif ($this->config->get('config_backgroundimage') && is_file(DIR_IMAGE . $this->config->get('config_backgroundimage'))) {
+			$data['backgroundimage'] = $this->model_tool_image->resize($this->config->get('config_backgroundimage'), 100, 100);
+		} else {
+			$data['backgroundimage'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		}
+
+        if (isset($this->request->post['config_repeatbackground'])) {
+			$data['config_repeatbackground'] = $this->request->post['config_repeatbackground'];
+		} else {
+			$data['config_repeatbackground'] = $this->config->get('config_repeatbackground');
+		}
+        $data['repeatbackgrounds'] = array(
+        'no-repeat',
+		'repeat-x',
+		'repeat-y',
+        'repeat',
+        );
+        if (isset($this->request->post['config_backgroundcolor'])) {
+			$data['config_backgroundcolor'] = $this->request->post['config_backgroundcolor'];
+		} else {
+			$data['config_backgroundcolor'] = $this->config->get('config_backgroundcolor');
+		}
+
+        if (isset($this->request->post['config_text_color'])) {
+			$data['config_text_color'] = $this->request->post['config_text_color'];
+		} else {
+			$data['config_text_color'] = $this->config->get('config_text_color');
+		}
+
+        if (isset($this->request->post['config_link_color'])) {
+			$data['config_link_color'] = $this->request->post['config_link_color'];
+		} else {
+			$data['config_link_color'] = $this->config->get('config_link_color');
+		}
+
+        if (isset($this->request->post['config_link_color_hover'])) {
+			$data['config_link_color_hover'] = $this->request->post['config_link_color_hover'];
+		} else {
+			$data['config_link_color_hover'] = $this->config->get('config_link_color_hover');
+		}
+
+        if (isset($this->request->post['config_title_color'])) {
+			$data['config_title_color'] = $this->request->post['config_title_color'];
+		} else {
+			$data['config_title_color'] = $this->config->get('config_title_color');
+		}
+
+        if (isset($this->request->post['config_top_bar_background'])) {
+			$data['config_top_bar_background'] = $this->request->post['config_top_bar_background'];
+		} else {
+			$data['config_top_bar_background'] = $this->config->get('config_top_bar_background');
+		}
+
+        if (isset($this->request->post['config_top_bar_link_color'])) {
+			$data['config_top_bar_link_color'] = $this->request->post['config_top_bar_link_color'];
+		} else {
+			$data['config_top_bar_link_color'] = $this->config->get('config_top_bar_link_color');
+		}
+
+        if (isset($this->request->post['config_top_bar_link_color_hover'])) {
+			$data['config_top_bar_link_color_hover'] = $this->request->post['config_top_bar_link_color_hover'];
+		} else {
+			$data['config_top_bar_link_color_hover'] = $this->config->get('config_top_bar_link_color_hover');
+		}
+
+        if (isset($this->request->post['config_top_bar_link_icon'])) {
+			$data['config_top_bar_link_icon'] = $this->request->post['config_top_bar_link_icon'];
+		} else {
+			$data['config_top_bar_link_icon'] = $this->config->get('config_top_bar_link_icon');
+		}
+
+        if (isset($this->request->post['config_searchbackground'])) {
+			$data['config_searchbackground'] = $this->request->post['config_searchbackground'];
+		} else {
+			$data['config_searchbackground'] = $this->config->get('config_searchbackground');
+		}
+
+        if (isset($this->request->post['config_searchcolor'])) {
+			$data['config_searchcolor'] = $this->request->post['config_searchcolor'];
+		} else {
+			$data['config_searchcolor'] = $this->config->get('config_searchcolor');
+		}
+        if (isset($this->request->post['config_button_searchcolor'])) {
+			$data['config_button_searchcolor'] = $this->request->post['config_button_searchcolor'];
+		} else {
+			$data['config_button_searchcolor'] = $this->config->get('config_button_searchcolor');
+		}
+        if (isset($this->request->post['config_button_searchbackground'])) {
+			$data['config_button_searchbackground'] = $this->request->post['config_button_searchbackground'];
+		} else {
+			$data['config_button_searchbackground'] = $this->config->get('config_button_searchbackground');
+		}
+
+        if (isset($this->request->post['config_cartbackground'])) {
+			$data['config_cartbackground'] = $this->request->post['config_cartbackground'];
+		} else {
+			$data['config_cartbackground'] = $this->config->get('config_cartbackground');
+		}
+        if (isset($this->request->post['config_cartbackgroundopen'])) {
+			$data['config_cartbackgroundopen'] = $this->request->post['config_cartbackgroundopen'];
+		} else {
+			$data['config_cartbackgroundopen'] = $this->config->get('config_cartbackgroundopen');
+		}
+
+        if (isset($this->request->post['config_cartlink'])) {
+			$data['config_cartlink'] = $this->request->post['config_cartlink'];
+		} else {
+			$data['config_cartlink'] = $this->config->get('config_cartlink');
+		}
+        if (isset($this->request->post['config_cartlinkopen'])) {
+			$data['config_cartlinkopen'] = $this->request->post['config_cartlinkopen'];
+		} else {
+			$data['config_cartlinkopen'] = $this->config->get('config_cartlinkopen');
+		}
+
+
+        if (isset($this->request->post['config_menubackground'])) {
+			$data['config_menubackground'] = $this->request->post['config_menubackground'];
+		} else {
+			$data['config_menubackground'] = $this->config->get('config_menubackground');
+		}
+        if (isset($this->request->post['config_menulink'])) {
+			$data['config_menulink'] = $this->request->post['config_menulink'];
+		} else {
+			$data['config_menulink'] = $this->config->get('config_menulink');
+		}
+        if (isset($this->request->post['config_menulinkhover'])) {
+			$data['config_menulinkhover'] = $this->request->post['config_menulinkhover'];
+		} else {
+			$data['config_menulinkhover'] = $this->config->get('config_menulinkhover');
+		}
+        if (isset($this->request->post['config_menulinkhoverbg'])) {
+			$data['config_menulinkhoverbg'] = $this->request->post['config_menulinkhoverbg'];
+		} else {
+			$data['config_menulinkhoverbg'] = $this->config->get('config_menulinkhoverbg');
+		}
+        if (isset($this->request->post['config_menubackgrounddropdown'])) {
+			$data['config_menubackgrounddropdown'] = $this->request->post['config_menubackgrounddropdown'];
+		} else {
+			$data['config_menubackgrounddropdown'] = $this->config->get('config_menubackgrounddropdown');
+		}
+         if (isset($this->request->post['config_menulinkdropdown'])) {
+			$data['config_menulinkdropdown'] = $this->request->post['config_menulinkdropdown'];
+		} else {
+			$data['config_menulinkdropdown'] = $this->config->get('config_menulinkdropdown');
+		}
+         if (isset($this->request->post['config_menulinkdropdownhover'])) {
+			$data['config_menulinkdropdownhover'] = $this->request->post['config_menulinkdropdownhover'];
+		} else {
+			$data['config_menulinkdropdownhover'] = $this->config->get('config_menulinkdropdownhover');
+		}
+
+         if (isset($this->request->post['config_menulinkdropdownhoverbg'])) {
+			$data['config_menulinkdropdownhoverbg'] = $this->request->post['config_menulinkdropdownhoverbg'];
+		} else {
+			$data['config_menulinkdropdownhoverbg'] = $this->config->get('config_menulinkdropdownhoverbg');
+		}
+
+        if (isset($this->request->post['config_footerbg'])) {
+			$data['config_footerbg'] = $this->request->post['config_footerbg'];
+		} else {
+			$data['config_footerbg'] = $this->config->get('config_footerbg');
+		}
+        if (isset($this->request->post['config_footerlink'])) {
+			$data['config_footerlink'] = $this->request->post['config_footerlink'];
+		} else {
+			$data['config_footerlink'] = $this->config->get('config_footerlink');
+		}
+        if (isset($this->request->post['config_footerlinkhover'])) {
+			$data['config_footerlinkhover'] = $this->request->post['config_footerlinkhover'];
+		} else {
+			$data['config_footerlinkhover'] = $this->config->get('config_footerlinkhover');
+		}
+        if (isset($this->request->post['config_footertitle'])) {
+			$data['config_footertitle'] = $this->request->post['config_footertitle'];
+		} else {
+			$data['config_footertitle'] = $this->config->get('config_footertitle');
+		}
+        if (isset($this->request->post['config_productsbg'])) {
+			$data['config_productsbg'] = $this->request->post['config_productsbg'];
+		} else {
+			$data['config_productsbg'] = $this->config->get('config_productsbg');
+		}
+        if (isset($this->request->post['config_productsbghover'])) {
+			$data['config_productsbghover'] = $this->request->post['config_productsbghover'];
+		} else {
+			$data['config_productsbghover'] = $this->config->get('config_productsbghover');
+		}
+        if (isset($this->request->post['config_productstitle'])) {
+			$data['config_productstitle'] = $this->request->post['config_productstitle'];
+		} else {
+			$data['config_productstitle'] = $this->config->get('config_productstitle');
+		}
+        if (isset($this->request->post['config_productstitlehover'])) {
+			$data['config_productstitlehover'] = $this->request->post['config_productstitlehover'];
+		} else {
+			$data['config_productstitlehover'] = $this->config->get('config_productstitlehover');
+		}
+        if (isset($this->request->post['config_buttoncartbg'])) {
+			$data['config_buttoncartbg'] = $this->request->post['config_buttoncartbg'];
+		} else {
+			$data['config_buttoncartbg'] = $this->config->get('config_buttoncartbg');
+		}
+        if (isset($this->request->post['config_buttoncartbghover'])) {
+			$data['config_buttoncartbghover'] = $this->request->post['config_buttoncartbghover'];
+		} else {
+			$data['config_buttoncartbghover'] = $this->config->get('config_buttoncartbghover');
+		}
+        if (isset($this->request->post['config_buttontextbg'])) {
+			$data['config_buttontextbg'] = $this->request->post['config_buttontextbg'];
+		} else {
+			$data['config_buttontextbg'] = $this->config->get('config_buttontextbg');
+		}
+        if (isset($this->request->post['config_buttoncarttext'])) {
+			$data['config_buttoncarttext'] = $this->request->post['config_buttoncarttext'];
+		} else {
+			$data['config_buttoncarttext'] = $this->config->get('config_buttoncarttext');
+		}
+        if (isset($this->request->post['config_buttoncarttexthover'])) {
+			$data['config_buttoncarttexthover'] = $this->request->post['config_buttoncarttexthover'];
+		} else {
+			$data['config_buttoncarttexthover'] = $this->config->get('config_buttoncarttexthover');
+		}
+        if (isset($this->request->post['config_buttoncartlikebg'])) {
+			$data['config_buttoncartlikebg'] = $this->request->post['config_buttoncartlikebg'];
+		} else {
+			$data['config_buttoncartlikebg'] = $this->config->get('config_buttoncartlikebg');
+		}
+        if (isset($this->request->post['config_buttoncartlikebghover'])) {
+			$data['config_buttoncartlikebghover'] = $this->request->post['config_buttoncartlikebghover'];
+		} else {
+			$data['config_buttoncartlikebghover'] = $this->config->get('config_buttoncartlikebghover');
+		}
+         if (isset($this->request->post['config_buttoncartlike'])) {
+			$data['config_buttoncartlike'] = $this->request->post['config_buttoncartlike'];
+		} else {
+			$data['config_buttoncartlike'] = $this->config->get('config_buttoncartlike');
+		}
+        if (isset($this->request->post['config_buttoncartlikehover'])) {
+			$data['config_buttoncartlikehover'] = $this->request->post['config_buttoncartlikehover'];
+		} else {
+			$data['config_buttoncartlikehover'] = $this->config->get('config_buttoncartlikehover');
+		}
+        if (isset($this->request->post['config_buttondefault'])) {
+			$data['config_buttondefault'] = $this->request->post['config_buttondefault'];
+		} else {
+			$data['config_buttondefault'] = $this->config->get('config_buttondefault');
+		}
+        if (isset($this->request->post['config_buttondefaulthover'])) {
+			$data['config_buttondefaulthover'] = $this->request->post['config_buttondefaulthover'];
+		} else {
+			$data['config_buttondefaulthover'] = $this->config->get('config_buttondefaulthover');
+		}
+        if (isset($this->request->post['config_popup_image'])) {
+			$data['config_popup_image'] = $this->request->post['config_popup_image'];
+		} else {
+			$data['config_popup_image'] = $this->config->get('config_popup_image');
+		}
+            ]]></add>
+		</operation>
+	</file>
+    <file path="admin/language/*/setting/setting.php">
+		<operation error="skip">
+			<search><![CDATA[
+            <?php
+            ]]></search>
+			<add position="after"><![CDATA[
+            $_['entry_text_color']                      = 'Text color';
+            $_['text_background']                      = 'Background';
+            $_['text_links']                      = 'Links color';
+            $_['text_links_hover']                      = 'Links color hover';
+            $_['text_backgroundhover']                      = 'Background hover';
+            $_['text_icon']                      = 'Icon';
+            $_['text_dropdown']                      = 'Dropdown Menu';
+            $_['entry_searchandcart']                      = 'Search and Cart';
+            $_['text_products']                      = 'Product box';
+            $_['text_buttoncartbg']                      = 'Button Cart background';
+            $_['text_buttoncartbghover']                      = 'Button Cart background hover';
+            $_['text_buttoncarttext']                      = 'Button Cart Text';
+            $_['text_buttoncarttexthover']                      = 'Button Cart Text hover';
+            $_['text_buttoncartlikebg']                      = 'Icon wistlist, compare background';
+            $_['text_buttoncartlikebghover']                      = 'Icon Wistlist, Compare background hover';
+            $_['text_buttoncartlike']                      = 'Icon wistlist, compare color';
+            $_['text_buttoncartlikehover']                      = 'Icon Wistlist, Compare color hover';
+            $_['text_popup_image']                      = 'Background Popup';
+
+            $_['entry_backgroundimage']                 = 'Background image';
+            $_['entry_repeatbackground']                = 'Background repeat';
+            $_['entry_backgroundcolor']                 = 'Background color';
+            $_['entry_text_color']                      = 'Text color';
+            $_['entry_link_color']                      = 'Links color';
+            $_['entry_link_color_hover']                = 'Links hover color';
+            $_['entry_title_color']                           = 'Title color';
+            $_['entry_title_colorhover']                           = 'Title hover';
+
+            $_['tab_themepanel']                 = 'Theme Customization';
+            $_['text_general']                 = 'General - To restore default color, please clear all characters in color form';
+            $_['help_general']                 = 'You can change: Background (color and Image), text color, links color on the template';
+
+            $_['text_top_bar']                 = 'Top Bar';
+            $_['help_top_bar']                 = 'The menu on Top: Currency, Language, Phone, Account, Wishlist, Shopingcart, Checkout';
+
+            $_['help_search']                      = 'Change Header Search box';
+            $_['text_search']                 = 'Search box';
+            $_['text_buttonsearchbg']                      = 'Search button background';
+            $_['text_buttonsearchcolor']                 = 'Search icon color';
+
+            $_['help_cart']                      = 'Change Header Cart box';
+            $_['text_cart']                 = 'Cart box';
+
+            $_['help_menu']                      = 'Change Header menu';
+            $_['text_menu']                 = 'Menu';
+
+            $_['text_footer']                      = 'Footer';
+            $_['help_footer']                      = 'Edit color, background footer';
+
+             $_['help_products']                      = 'Edit color, background products module';
+             $_['text_buttondefault']                      = 'Button Default';
+              $_['text_buttondefaulthover']                      = 'Button Default hover';
+            ]]></add>
+		</operation>
+	</file>
+    <file path="admin/view/template/setting/setting.tpl">
+        <operation error="skip">
+			<search><![CDATA[
+            <li><a href="#tab-ftp" data-toggle="tab"><?php echo $tab_ftp; ?></a></li>
+            ]]></search>
+			<add position="before"><![CDATA[
+            <li><a href="#tab-themepanel" data-toggle="tab"><?php echo $tab_themepanel; ?></a></li>
+            ]]></add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[
+            <div class="tab-pane" id="tab-ftp">
+            ]]></search>
+			<add position="before"><![CDATA[
+            <div class="tab-pane" id="tab-themepanel">
+            <fieldset>
+                <legend><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_general); ?>"><?php echo $text_general; ?></span></legend>
+            <div class="form-group">
+                <div class="row">
+                <label class="col-sm-2 control-label" for="input-repeatbackground"><?php echo $entry_backgroundimage; ?></span></label>
+
+                  <div class="col-sm-2"><a href="" id="thumb-backgroundimage" data-toggle="image" class="img-thumbnail"><img src="<?php echo $backgroundimage; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
+                  <input type="hidden" name="config_backgroundimage" value="<?php echo $config_backgroundimage; ?>" id="input-backgroundimage" />
+                  </div>
+                  <label class="col-sm-2 control-label" for="input-repeatbackground"><?php echo $entry_repeatbackground; ?></label>
+                  <div class="col-sm-2">
+                    <select name="config_repeatbackground" id="input-repeatbackground" class="form-control">
+                    <?php foreach ($repeatbackgrounds as $repeatbackground) { ?>
+                    <?php if ($repeatbackground == $config_repeatbackground) { ?>
+                    <option value="<?php echo $repeatbackground; ?>" selected="selected"><?php echo $repeatbackground; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $repeatbackground; ?>"><?php echo $repeatbackground; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  </div>
+                  <label class="col-sm-2 control-label" for="input-backgroundcolor"><?php echo $entry_backgroundcolor; ?></label>
+                <div class="col-sm-1">
+                <input type="text" name="config_backgroundcolor" value="<?php echo $config_backgroundcolor; ?>"  id="input-backgroundcolor" size="6" class="color {required:false,hash:true}"  />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="input-text_color"><?php echo $entry_text_color; ?></label>
+                 <div class="col-sm-4">
+                  <input type="text" name="config_text_color" value="<?php echo $config_text_color; ?>"  id="input-text_color" size="6" class="color {required:false,hash:true}" />
+                 </div>
+                <label class="col-sm-2 control-label" for="input-link_color"><?php echo $entry_link_color; ?></label>
+               <div class="col-sm-4">
+               <input type="text" name="config_link_color" value="<?php echo $config_link_color; ?>"  id="input-link_color" size="6" class="color {required:false,hash:true}" />
+              </div>
+             </div>
+            </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="input-link_color_hover"><?php echo $entry_link_color_hover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_link_color_hover" value="<?php echo $config_link_color_hover; ?>"  id="input-link_color_hover" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-title_color"><?php echo $entry_title_color; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_title_color" value="<?php echo $config_title_color; ?>"  id="input-title_color" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+        <br/>
+            <legend><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_top_bar); ?>"><?php echo $text_top_bar; ?></span></legend>
+
+            <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="input-top_bar_background"><?php echo $text_background; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_top_bar_background" value="<?php echo $config_top_bar_background; ?>"  id="input-top_bar_background" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-top_bar_link_color"><?php echo $text_links; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_top_bar_link_color" value="<?php echo $config_top_bar_link_color; ?>"  id="input-top_bar_link_color" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="input-top_bar_background"><?php echo $text_icon; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_top_bar_link_icon" value="<?php echo $config_top_bar_link_icon; ?>"  id="input-top_bar_link_icon" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-top_bar_link_color_hover"><?php echo $text_links_hover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_top_bar_link_color_hover" value="<?php echo $config_top_bar_link_color_hover; ?>"  id="input-top_bar_link_color_hover" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+         <br/>
+            <legend><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_search); ?>"><?php echo $text_search; ?></span></legend>
+
+            <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="searchbackground"><?php echo $text_background; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_searchbackground" value="<?php echo $config_searchbackground; ?>"  id="input-searchbackground" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-searchcolor"><?php echo $entry_text_color; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_searchcolor" value="<?php echo $config_searchcolor; ?>"  id="input-searchcolor" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="button_searchbackground"><?php echo $text_buttonsearchbg; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_button_searchbackground" value="<?php echo $config_button_searchbackground; ?>"  id="input-button_searchbackground" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-button_searchcolor"><?php echo $text_buttonsearchcolor; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_button_searchcolor" value="<?php echo $config_button_searchcolor; ?>"  id="input-button_searchcolor" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <br/>
+              <legend><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_cart); ?>"><?php echo $text_cart; ?></span></legend>
+
+            <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="cartbackground"><?php echo $text_background; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_cartbackground" value="<?php echo $config_cartbackground; ?>"  id="input-cartbackground" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-cartbackgroundopen"><?php echo $text_backgroundhover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_cartbackgroundopen" value="<?php echo $config_cartbackgroundopen; ?>"  id="input-cartbackgroundopen" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="cartlink"><?php echo $text_links; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_cartlink" value="<?php echo $config_cartlink; ?>"  id="input-cartlink" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-cartlinkopen"><?php echo $text_links_hover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_cartlinkopen" value="<?php echo $config_cartlinkopen; ?>"  id="input-cartlinkopen" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+             <br/>
+              <legend><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_menu); ?>"><?php echo $text_menu; ?></span></legend>
+
+            <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="menubackground"><?php echo $text_background; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_menubackground" value="<?php echo $config_menubackground; ?>"  id="input-menubackground" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-menulink"><?php echo $text_links; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_menulink" value="<?php echo $config_menulink; ?>"  id="input-menulink" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="menulinkhover"><?php echo $text_links_hover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_menulinkhover" value="<?php echo $config_menulinkhover; ?>"  id="input-menulinkhover" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-menulinkhoverbg"><?php echo $text_backgroundhover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_menulinkhoverbg" value="<?php echo $config_menulinkhoverbg; ?>"  id="input-menulinkhoverbg" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-3 control-label" for="dropdown"><?php echo $text_dropdown; ?></label>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="menubackgrounddropdown"><?php echo $text_background; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_menubackgrounddropdown" value="<?php echo $config_menubackgrounddropdown; ?>"  id="input-menubackgrounddropdown" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-menulinkdropdown"><?php echo $text_links; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_menulinkdropdown" value="<?php echo $config_menulinkdropdown; ?>"  id="input-menulinkdropdown" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="menulinkdropdownhover"><?php echo $text_links_hover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_menulinkdropdownhover" value="<?php echo $config_menulinkdropdownhover; ?>"  id="input-menulinkdropdownhover" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-menulinkdropdownhoverbg"><?php echo $text_backgroundhover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_menulinkdropdownhoverbg" value="<?php echo $config_menulinkdropdownhoverbg; ?>"  id="input-menulinkdropdownhoverbg" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <br/>
+              <legend><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_footer); ?>"><?php echo $text_footer; ?></span></legend>
+
+            <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="footerbg"><?php echo $text_background; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_footerbg" value="<?php echo $config_footerbg; ?>"  id="input-footerbg" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-footerlink"><?php echo $text_links; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_footerlink" value="<?php echo $config_footerlink; ?>"  id="input-footerlink" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="footerlinkhover"><?php echo $text_links_hover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_footerlinkhover" value="<?php echo $config_footerlinkhover; ?>"  id="input-footerlinkhover" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-footertitle"><?php echo $entry_title_color; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_footertitle" value="<?php echo $config_footertitle; ?>"  id="input-footertitle" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+            <br/>
+              <legend><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_products); ?>"><?php echo $text_products; ?></span></legend>
+
+            <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="productsbg"><?php echo $text_background; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_productsbg" value="<?php echo $config_productsbg; ?>"  id="input-productsbg" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-productsbghover"><?php echo $text_backgroundhover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_productsbghover" value="<?php echo $config_productsbghover; ?>"  id="input-productsbghover" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="productstitle"><?php echo $entry_title_color; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_productstitle" value="<?php echo $config_productstitle; ?>"  id="input-productstitle" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-productstitlehover"><?php echo $entry_title_colorhover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_productstitlehover" value="<?php echo $config_productstitlehover; ?>"  id="input-productstitlehover" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="buttoncartbg"><?php echo $text_buttoncartbg; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_buttoncartbg" value="<?php echo $config_buttoncartbg; ?>"  id="input-buttoncartbg" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-buttoncartbghover"><?php echo $text_buttoncartbghover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_buttoncartbghover" value="<?php echo $config_buttoncartbghover; ?>"  id="input-buttoncartbghover" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="buttoncarttext"><?php echo $text_buttoncarttext; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_buttoncarttext" value="<?php echo $config_buttoncarttext; ?>"  id="input-buttoncarttext" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-buttoncarttexthover"><?php echo $text_buttoncarttexthover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_buttoncarttexthover" value="<?php echo $config_buttoncarttexthover; ?>"  id="input-buttoncarttexthover" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="buttoncartlike"><?php echo $text_buttoncartlike; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_buttoncartlike" value="<?php echo $config_buttoncartlike; ?>"  id="input-buttoncartlike" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-buttoncartlikehover"><?php echo $text_buttoncartlikehover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_buttoncartlikehover" value="<?php echo $config_buttoncartlikehover; ?>"  id="input-buttoncartlikehover" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="popup_image"><?php echo $text_popup_image; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_popup_image" value="<?php echo $config_popup_image; ?>"  id="input-popup_image" size="6" class="color {required:false,hash:true}" />
+                </div>
+
+              <br/>
+               <br/>
+              <legend><?php echo $text_buttondefault; ?></span></legend>
+
+              <div class="form-group">
+               <div class="row">
+                <label class="col-sm-2 control-label" for="buttondefault"><?php echo $text_buttondefault; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_buttondefault" value="<?php echo $config_buttondefault; ?>"  id="input-buttondefault" size="6" class="color {required:false,hash:true}" />
+                </div>
+               <label class="col-sm-2 control-label" for="input-buttondefaulthover"><?php echo $text_buttondefaulthover; ?></label>
+                <div class="col-sm-4">
+                  <input type="text" name="config_buttondefaulthover" value="<?php echo $config_buttondefaulthover; ?>"  id="input-buttondefaulthover" size="6" class="color {required:false,hash:true}" />
+                </div>
+               </div>
+              </div>
+
+              </fieldset>
+             </div>
+            ]]></add>
+		</operation>
+        <operation error="skip">
+			<search><![CDATA[
+            //--></script></div>
+            ]]></search>
+			<add position="replace"><![CDATA[
+            //--></script>
+            <script type="text/javascript" src="view/javascript/jscolor/jscolor.js"></script>
+            </div>
+            ]]></add>
+		</operation>
+	</file>
+</modification>

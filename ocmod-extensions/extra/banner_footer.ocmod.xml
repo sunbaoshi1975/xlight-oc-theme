@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Text Banner on Footer</name>
+    <code>Text Banner on Footer</code>
+    <version>1.0</version>
+    <author>websitemart.vn</author>
+    <link>http://www.octheme.com</link>
+	<file path="admin/controller/setting/setting.php">
+		<operation>
+			<search><![CDATA[
+            $data['entry_google_analytics'] = $this->language->get('entry_google_analytics');
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['entry_banner_footer'] = $this->language->get('entry_banner_footer');
+            $data['entry_link_banner_footer'] = $this->language->get('entry_link_banner_footer');
+            $data['help_banner_footer'] = $this->language->get('help_banner_footer');
+            $data['entry_banner_footer'] = $this->language->get('entry_banner_footer');
+            ]]></add>
+		</operation>
+        <operation>
+			<search><![CDATA[
+            $data['header'] = $this->load->controller('common/header');
+            ]]></search>
+			<add position="before"><![CDATA[
+            if (isset($this->request->post['config_banner_footer'])) {
+			$data['config_banner_footer'] = $this->request->post['config_banner_footer'];
+		} else {
+			$data['config_banner_footer'] = $this->config->get('config_banner_footer');
+		}
+
+        if (isset($this->request->post['config_link_banner_footer'])) {
+			$data['config_link_banner_footer'] = $this->request->post['config_link_banner_footer'];
+		} else {
+			$data['config_link_banner_footer'] = $this->config->get('config_link_banner_footer');
+		}
+            ]]></add>
+		</operation>
+	</file>
+    <file path="admin/language/*/setting/setting.php">
+		<operation>
+			<search><![CDATA[
+            <?php
+            ]]></search>
+			<add position="after"><![CDATA[
+            $_['entry_banner_footer']           = 'Text Banner';
+            $_['help_banner_footer']            = 'Enter Text Banner.(i.e FREE SHIPPING ON OVER ODER 99$).';
+
+            $_['entry_link_banner_footer']           = 'Link';
+            $_['help_link_banner_footer']            = 'Enter linktext banner(i.e index.php?route=product/product&product_id=28).';
+
+            ]]></add>
+		</operation>
+	</file>
+        <file path="admin/view/template/setting/setting.tpl">
+		<operation>
+			<search><![CDATA[
+            <legend><?php echo $text_product; ?></legend>
+            ]]></search>
+			<add position="before"><![CDATA[
+            <legend><?php echo $entry_banner_footer; ?></legend>
+            <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-banner_footer"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_banner_footer); ?>"><?php echo $entry_banner_footer; ?></span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_banner_footer" value="<?php echo $config_banner_footer; ?>" placeholder="<?php echo $entry_banner_footer; ?>" id="input-banner_footer" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-link_banner_footer"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_link_banner_footer); ?>"><?php echo $entry_link_banner_footer; ?></span></label>
+                <div class="col-sm-10">
+                <input type="text" name="config_link_banner_footer" value="<?php echo $config_link_banner_footer; ?>" placeholder="<?php echo $entry_link_banner_footer; ?>" id="input-link_banner_footer" class="form-control" />
+                </div>
+            </div>
+
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/controller/common/footer.php">
+		<operation>
+			<search><![CDATA[
+            $this->load->language('common/footer');
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['link_banner_footer'] = $this->config->get('config_link_banner_footer');
+            $data['banner_footer'] = $this->config->get('config_banner_footer');
+            ]]></add>
+		</operation>
+	</file>
+   <file path="catalog/view/theme/*/template/common/footer.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <footer>
+            ]]></search>
+			<add position="after" ><![CDATA[
+            <div class="row"><div class="banner-footer"><div class="container"><div class="col-sm-12">
+            <?php echo $top_footer; ?><a href="<?php echo $link_banner_footer; ?>" title=""><p><?php echo $banner_footer; ?></p></a>
+            </div></div></div></div>
+            ]]></add>
+		</operation>
+	</file>
+</modification>

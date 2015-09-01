@@ -1,0 +1,126 @@
+<modification>
+	<name>Category module with thumb</name>
+    <code>Category module with thumb</code>
+    <version>1.0</version>
+    <author>websitemart.vn</author>
+    <link>http://www.octheme.com</link>
+	<file path="catalog/controller/module/category.php">
+		<operation>
+			<search><![CDATA[
+             $this->load->model('catalog/product');
+            ]]></search>
+			<add position="after" error="log"><![CDATA[
+			$this->load->model('tool/image');
+            ]]></add>
+		</operation>
+        <operation>
+			<search><![CDATA[
+           $data['categories'][] = array(
+            ]]></search>
+			<add position="before" error="log"><![CDATA[
+
+            if ($this->config->get('thumb_category')) {
+			$thumb_category = 'thumb';
+				} else {
+			$thumb_category = false;
+				}
+
+        ]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+            $data['categories'][] = array(
+            ]]></search>
+			<add position="after" error="log"><![CDATA[
+            'thumb' => $this->model_tool_image->resize($category['image'], 120, 120),
+        ]]></add>
+		</operation>
+	</file>
+
+        <file path="admin/controller/module/category.php">
+		<operation>
+			<search position="before"><![CDATA[
+            $data['heading_title'] = $this->language->get('heading_title');
+            ]]></search>
+			<add><![CDATA[
+
+        if (isset($this->request->post['config_thumb_category'])) {
+			$data['config_thumb_category'] = $this->request->post['config_thumb_category'];
+		} else {
+			$data['config_thumb_category'] = $this->config->get('config_thumb_category');
+		}
+        $data['text_displaythumb'] = $this->language->get('text_displaythumb');
+        $data['text_displayshortthumb'] = $this->language->get('text_displayshortthumb');
+        $data['text_yes'] = $this->language->get('text_yes');
+		$data['text_no'] = $this->language->get('text_no');
+            ]]></add>
+		</operation>
+	</file>
+    <file path="admin/language/*/module/category.php">
+		<operation>
+			<search><![CDATA[
+            <?php
+            ]]></search>
+			<add position="after"><![CDATA[
+            $_['text_displaythumb']         = 'Display images? ';
+            $_['text_displayshortthumb']         = '(Display thumb image in category module)';
+            $_['text_yes']         = 'Yes';
+            $_['text_no']         = 'no';
+            ]]></add>
+		</operation>
+	</file>
+    <file path="admin/view/template/module/category.tpl">
+		<operation>
+			<search><![CDATA[
+            <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-category" class="form-horizontal">
+            ]]></search>
+			<add position="after" offset="16"><![CDATA[
+            <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $text_displayshortthumb; ?>"><?php echo $text_displaythumb; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <?php if ($config_thumb_category) { ?>
+                      <input type="radio" name="config_thumb_category" value="1" checked="checked" />
+                      <?php echo $text_yes; ?>
+                      <?php } else { ?>
+                      <input type="radio" name="config_thumb_category" value="1" />
+                      <?php echo $text_yes; ?>
+                      <?php } ?>
+                    </label>
+                    <label class="radio-inline">
+                      <?php if (!$config_thumb_category) { ?>
+                      <input type="radio" name="config_thumb_category" value="0" checked="checked" />
+                      <?php echo $text_no; ?>
+                      <?php } else { ?>
+                      <input type="radio" name="config_thumb_category" value="0" />
+                      <?php echo $text_no; ?>
+                      <?php } ?>
+                    </label>
+                  </div>
+                </div>
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/view/theme/*/template/module/category.tpl">
+		<operation>
+			<search><![CDATA[
+            <?php if ($category['category_id'] == $category_id) { ?>
+            ]]></search>
+			<add position="after"><![CDATA[
+            <?php if ($category['thumb']) { ?>
+   <a href="<?php echo $category['href']; ?>"><img style=" width: 50px; height: auto; border: none;" src="<?php echo $category['thumb']; ?>" alt="<?php echo $category['name']; ?>" /></a>
+    <?php } ?>
+            ]]></add>
+		</operation>
+        <operation>
+			<search><![CDATA[
+            <a href="<?php echo $category['href']; ?>" class="list-group-item"><?php echo $category['name']; ?></a>
+            ]]></search>
+			<add position="before"><![CDATA[
+            <?php if ($category['thumb']) { ?>
+   <a href="<?php echo $category['href']; ?>"><img style=" width: 50px; height: auto; border: none;" src="<?php echo $category['thumb']; ?>" alt="<?php echo $category['name']; ?>" /></a>
+    <?php } ?>
+            ]]></add>
+		</operation>
+	</file>
+</modification>

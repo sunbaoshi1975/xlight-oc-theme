@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Demo link product</name>
+    <code>Demo link product</code>
+    <version>1.0</version>
+    <author>websitemart.vn</author>
+    <link>http://www.octheme.com</link>
+	<file path="catalog/controller/module/featured.php">
+		<operation>
+			<search><![CDATA[
+            'name'        => $product_info['name'],
+            ]]></search>
+			<add position="after"><![CDATA[
+            'model'        => $product_info['model'],
+            ]]></add>
+		</operation>
+        <operation>
+			<search><![CDATA[
+            $data['heading_title'] = $this->language->get('heading_title');
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['text_view'] = $this->language->get('text_view');
+            $data['text_model'] = $this->language->get('text_model');
+            ]]></add>
+		</operation>
+        <operation error="skip">
+			<search><![CDATA[
+            $data['products'][] = array(
+            ]]></search>
+			<add position="after"><![CDATA[
+            'popup' => $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/controller/module/latest.php">
+		<operation>
+			<search><![CDATA[
+            'name'        => $result['name'],
+            ]]></search>
+			<add position="after"><![CDATA[
+            'model'        => $result['model'],
+            ]]></add>
+		</operation>
+        <operation>
+			<search><![CDATA[
+            $data['heading_title'] = $this->language->get('heading_title');
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['text_view'] = $this->language->get('text_view');
+            $data['text_model'] = $this->language->get('text_model');
+            ]]></add>
+		</operation>
+        <operation error="skip">
+			<search><![CDATA[
+            $data['products'][] = array(
+            ]]></search>
+			<add position="after"><![CDATA[
+            'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/controller/module/special.php">
+		<operation>
+			<search><![CDATA[
+            'name'        => $result['name'],
+            ]]></search>
+			<add position="after"><![CDATA[
+            'model'        => $result['model'],
+            ]]></add>
+		</operation>
+        <operation>
+			<search><![CDATA[
+            $data['heading_title'] = $this->language->get('heading_title');
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['text_view'] = $this->language->get('text_view');
+            $data['text_model'] = $this->language->get('text_model');
+            ]]></add>
+		</operation>
+        <operation error="skip">
+			<search><![CDATA[
+            $data['products'][] = array(
+            ]]></search>
+			<add position="after"><![CDATA[
+            'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/controller/module/bestseller.php">
+		<operation>
+			<search><![CDATA[
+            'name'        => $result['name'],
+            ]]></search>
+			<add position="after"><![CDATA[
+            'model'        => $result['model'],
+            ]]></add>
+		</operation>
+        <operation>
+			<search><![CDATA[
+            $data['heading_title'] = $this->language->get('heading_title');
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['text_view'] = $this->language->get('text_view');
+            $data['text_model'] = $this->language->get('text_model');
+            ]]></add>
+		</operation>
+        <operation error="skip">
+			<search><![CDATA[
+            $data['products'][] = array(
+            ]]></search>
+			<add position="after"><![CDATA[
+            'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/language/*/module/*.php">
+        <operation>
+			<search><![CDATA[
+            <?php
+            ]]></search>
+			<add position="after"><![CDATA[
+            $_['text_view']  = 'Detail';
+            $_['text_model']  = 'Live demo';
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/controller/common/header.php">
+        <operation>
+			<search><![CDATA[
+            $data['language'] = $this->load->controller('common/language');
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['google_translate'] = $this->load->controller('module/google_translate');
+            ]]></add>
+		</operation>
+	</file>
+</modification>

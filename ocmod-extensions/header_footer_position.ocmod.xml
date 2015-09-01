@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Header and Footer Position</name>
+    <code>Header and Footer Position</code>
+    <version>1.0</version>
+    <author>websitemart.vn</author>
+    <link>http://www.octheme.com</link>
+	<file path="catalog/controller/common/header.php">
+		<operation error="skip">
+			<search><![CDATA[
+            public function index() {
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['top_header'] = $this->load->controller('common/extra_position/top_header');
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/controller/common/footer.php">
+		<operation error="skip">
+			<search><![CDATA[
+            public function index() {
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['top_footer'] = $this->load->controller('common/extra_position/top_footer');
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/view/theme/*/template/common/header.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <?php if ($categories) { ?>
+            ]]></search>
+			<add position="after"  offset="200"><![CDATA[
+            <div class="container"><?php echo $top_header; ?></div>
+            ]]></add>
+		</operation>
+	</file>
+    <file path="catalog/view/theme/*/template/common/footer.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <footer>
+            ]]></search>
+			<add position="before" ><![CDATA[
+            <div class="row"><div class="container" style="padding: 0px;"><div class="col-sm-12"><?php echo $top_footer; ?></div></div></div>
+            ]]></add>
+		</operation>
+	</file>
+        <file path="admin/controller/design/layout.php">
+		<operation error="skip">
+			<search><![CDATA[
+            $data['heading_title'] = $this->language->get('heading_title');
+            ]]></search>
+			<add position="after"><![CDATA[
+            $data['text_top_header'] = $this->language->get('text_top_header');
+            $data['text_top_footer'] = $this->language->get('text_top_footer');
+            ]]></add>
+		</operation>
+	</file>
+    <file path="admin/language/*/design/layout.php">
+		<operation error="skip">
+			<search><![CDATA[
+            <?php
+            ]]></search>
+			<add position="after"><![CDATA[
+            $_['text_top_header']      = 'Header';
+            $_['text_top_footer']      = 'Footer';
+            ]]></add>
+		</operation>
+	</file>
+    <file path="admin/view/template/design/layout_form.tpl">
+		<operation error="skip">
+			<search><![CDATA[
+            <?php if ($layout_module['position'] == 'content_top') { ?>
+            ]]></search>
+			<add position="before"><![CDATA[
+            <?php if ($layout_module['position'] == 'top_header') { ?>
+                    <option value="top_header" selected="selected"><?php echo $text_top_header; ?></option>
+                    <?php } else { ?>
+                    <option value="top_header"><?php echo $text_top_header; ?></option>
+                    <?php } ?>
+            ]]></add>
+		</operation>
+        <operation error="skip">
+			<search><![CDATA[
+            <?php if ($layout_module['position'] == 'content_bottom') { ?>
+            ]]></search>
+			<add position="before"><![CDATA[
+            <?php if ($layout_module['position'] == 'top_footer') { ?>
+                    <option value="top_footer" selected="selected"><?php echo $text_top_footer; ?></option>
+                    <?php } else { ?>
+                    <option value="top_footer"><?php echo $text_top_footer; ?></option>
+                    <?php } ?>
+            ]]></add>
+		</operation>
+        <operation error="skip">
+			<search><![CDATA[
+            html += '    <option value="content_top"><?php echo $text_content_top; ?></option>';
+            ]]></search>
+			<add position="before"><![CDATA[
+           html += '    <option value="top_header"><?php echo $text_top_header; ?></option>';
+            ]]></add>
+		</operation>
+        <operation error="skip">
+			<search><![CDATA[
+            html += '    <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
+            ]]></search>
+			<add position="before"><![CDATA[
+           html += '    <option value="top_footer"><?php echo $text_top_footer; ?></option>';
+            ]]></add>
+		</operation>
+	</file>
+</modification>
